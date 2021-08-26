@@ -8,7 +8,6 @@ module.exports = {
       console.log("register user");
       console.log(req.body);
       let user = new User(req.body);
-      // user.password = req.body.lastName.toUpperCase();
       user.password = bcrypt.hashSync(req.body.lastName.toUpperCase(), 8);
       await user.save();
       return res.status(200).json({});
