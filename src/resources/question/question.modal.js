@@ -23,28 +23,6 @@ const questionSchema = mongoose.Schema(
         attachments: [
 
         ],
-        thread: [{
-            sender: {
-                type: mongoose.Types.ObjectId,
-                ref: 'users',
-            },
-            body: {
-                tpe: String
-            },
-            status: {
-                type: String,
-                enum: ['read', 'unread', 'delivered', 'pending', 'duplicate'],
-                default: 'pending'
-            },
-            sentAt: {
-                type: Date,
-                default: Date.now()
-            },
-            deliveredAt: {
-                type: Date,
-                default: Date.now()
-            }
-        }],
         status: {
             type: String,
             enum: ['answered', 'pending'],
