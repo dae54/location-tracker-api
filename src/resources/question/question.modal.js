@@ -7,10 +7,12 @@ const questionSchema = mongoose.Schema(
         body: {
             type: String,
             trim: false,
+            required: true
         },
         title: {
             type: String,
-            trim: false
+            trim: false,
+            required: true
         },
         tags: [{
             type: String

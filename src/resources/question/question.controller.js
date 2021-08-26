@@ -32,8 +32,10 @@ module.exports = {
         // POST: Create Resources here
         console.log(req.body)
         await Question.create(req.body).then(doc => {
-            console.log(doc)
             return res.status(200).json(doc)
+        }).catch(error => {
+            console.log(error)
+            return res.status(500).json({ message: error.message })
         })
     },
     update: async (req, res) => {
