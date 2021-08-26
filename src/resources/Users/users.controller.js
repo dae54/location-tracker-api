@@ -8,8 +8,8 @@ module.exports = {
       console.log("register user");
       console.log(req.body);
       let user = new User(req.body);
-      user.password = req.body.lastName.toUpperCase();
-      //   user.password = bcrypt.hashSync(userInfo.lastName.toUpperCase(), 8);
+      // user.password = req.body.lastName.toUpperCase();
+      user.password = bcrypt.hashSync(req.body.lastName.toUpperCase(), 8);
       await user.save();
       return res.status(200).json({});
     } catch (error) {
@@ -25,7 +25,9 @@ module.exports = {
   login: async (req, res, error) => {
     try {
       // CHECK IF USER EXISTS
+      console.log(req.body)
       let user = await User.findOne({ email: req.body.email }, "+password email role");
+      console.log(user)
       if (!user)
         return res.status(406).json({
           message: 'Invalid credentials',
