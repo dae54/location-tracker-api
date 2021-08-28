@@ -27,7 +27,7 @@ const questionSchema = mongoose.Schema(
         ],
         status: {
             type: String,
-            enum: ['answered', 'pending'],
+            enum: ['answered', 'pending', 'active'],
             default: 'pending'
         }
     },
