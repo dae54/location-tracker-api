@@ -13,8 +13,8 @@ module.exports = {
     console.log("Seed check...");
     if (userCount === 0) {
       console.log('here')
-      await module.exports.seedPermissions();
-      await module.exports.seedRoles();
+      // await module.exports.seedPermissions();
+      // await module.exports.seedRoles();
       await module.exports.seedAdministrator();
     }
     console.log("Seed check done ###");
@@ -27,12 +27,9 @@ module.exports = {
         firstName: "Root",
         lastName: "Admin",
         email: "root@admin.com",
-        phoneNumber: "255713000000",
         gender: "male",
         password: bcrypt.hashSync('toor', 8),
-        role: (
-          await Roles.findOne({ genericName: 'ROLE_SUPER_ADMIN' }).select('_id')
-        )._id,
+        role: 3
         // Add more properties needed here
       };
       //   Call register user from here
