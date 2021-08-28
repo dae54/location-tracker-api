@@ -5,12 +5,10 @@ const User = require("./users.modal");
 module.exports = {
   registerUser: async (req, res, errorCb) => {
     try {
-      console.log("register user");
-      console.log(req.body);
       let user = new User(req.body);
-      user.password = bcrypt.hashSync(req.body.lastName.toUpperCase(), 8);
+      user.password = bcrypt.hashSync(req.body.password, 8);
       await user.save();
-      return res.status(200).json({});
+      return res.status(200).json({ message: 'Sign up is successful. Use your email and password to login' });
     } catch (error) {
       return errorCb({
         status: 500,
@@ -24,7 +22,6 @@ module.exports = {
   login: async (req, res, error) => {
     try {
       // CHECK IF USER EXISTS
-      console.log(req.body)
       let user = await User.findOne({ email: req.body.email }, "+password email role");
       console.log(user)
       if (!user)
@@ -58,11 +55,6 @@ module.exports = {
         { token },
         { useFindAndModify: false, new: true }
       )
-        // .populate('companyId')
-        .populate({
-          path: 'role',
-          populate: [{ path: 'permission', select: 'genericName moduleName' }],
-        });
       return res.status(200).json(authenticatedUser);
     } catch (error) {
       console.log(error);
