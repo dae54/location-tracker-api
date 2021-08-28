@@ -19,13 +19,13 @@ const userSchema = mongoose.Schema(
       required: true,
       dropDups: true,
     },
-    phoneNumber: {
-      type: String,
-      unique: true,
-      trim: true,
-      required: true,
-      dropDups: true,
-    },
+    // phoneNumber: {
+    //   type: String,
+    //   unique: true,
+    //   trim: true,
+    //   required: true,
+    //   dropDups: true,
+    // },
     location: {
       country: { type: String, default: "Tanzania" },
       region: String,
@@ -43,9 +43,9 @@ const userSchema = mongoose.Schema(
       select: false,
     },
     role: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "role",
+      type: Number,
+      enum: [1, 2, 3],
+      default: 1
     },
     token: {
       type: String,
