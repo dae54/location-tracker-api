@@ -24,6 +24,21 @@ module.exports = {
                 res.status(500).json({ message: error.message })
             })
     },
+    syncOffineMessages: async (req, res) => {
+        // POST: Create Resources here
+        console.log(req.body)
+        req.body.forEach(v => delete v._id);
+
+        await Chat.insertMany(req.body)
+            .then(response => {
+                console.log(response)
+                res.status(200).json(response)
+            })
+            .catch(error => {
+                console.log(error)
+                res.status(500).json({ message: error.message })
+            })
+    },
     update: async (req, res) => {
         // PATCH: Update Resources here
     },
