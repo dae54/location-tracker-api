@@ -35,7 +35,7 @@ const chatSchema = mongoose.Schema(
         },
         sentAt: {
             type: Date,
-            default: Date.now()
+            required: true
         },
     },
     { timestamps: true }
