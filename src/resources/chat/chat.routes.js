@@ -7,6 +7,7 @@ const sessionMonitor = require("../../utils/sessionMonitor");
 router.get("/question/:questionId", sessionMonitor, chatController.getQuestionsThread);
 router.get("/:id", sessionMonitor, chatController.getOne);
 router.get("/", sessionMonitor, chatController.getAll);
+router.post("/sync", chatController.syncOffineMessages);
 router.post("/", chatController.create);
 router.patch("/", chatController.update);
 
