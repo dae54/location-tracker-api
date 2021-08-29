@@ -11,8 +11,23 @@ module.exports = {
         const { userID } = req.params
 
         await Question.find({ user: mongoose.Types.ObjectId(userID) })
+            .sort('-createdAt')
             .populate('user', 'email firstName lastName')
-            .sort('asc')
+            .populate('assistedBy', 'firstName lastName email')
+            .then(docs => {
+                return res.status(200).json(docs)
+            }).catch(error => {
+                console.log(error)
+                return res.status(500).json({ message: 'something went wrong' })
+            })
+    },
+    getQuestionsAnsweredByTutorID: async (req, res) => {
+        const { userID } = req.params
+
+        await Question.find({ assistedBy: mongoose.Types.ObjectId(userID) })
+            .sort('-createdAt')
+            .populate('user', 'email firstName lastName')
+            .populate('assistedBy', 'firstName lastName email')
             .then(docs => {
                 return res.status(200).json(docs)
             }).catch(error => {
@@ -23,7 +38,9 @@ module.exports = {
     getAll: async (req, res, next) => {
         // GET: Read ALL Resources from here
         await Question.find()
-            .populate('user', 'email fullName')
+            .populate('user', 'email firstName lastName')
+            .populate('assistedBy', 'firstName lastName email')
+            .sort('-createdAt')
             .then(docs => {
                 return res.status(200).json(docs)
             })
@@ -36,6 +53,21 @@ module.exports = {
             console.log(error)
             return res.status(500).json({ message: error.message })
         })
+    },
+    assignTutor: async (req, res) => {
+        const { questionID } = req.params
+        const { tutorID } = req.body
+
+        await Question.findByIdAndUpdate(questionID, { assistedBy: tutorID, status: 'active' }, { new: true })
+            .populate('assistedBy', 'firstName lastName email')
+            .populate('user', 'firstName lastName email')
+            .then(doc => {
+                console.log(doc)
+                return res.status(200).json(doc)
+            }).catch(error => {
+                console.log(error)
+                return res.status(500).json({ message: error.message })
+            })
     },
     update: async (req, res) => {
         // PATCH: Update Resources here

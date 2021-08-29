@@ -22,6 +22,15 @@ const questionSchema = mongoose.Schema(
             ref: 'users',
             required: true
         },
+        assistedBy: {
+            type: mongoose.Types.ObjectId,
+            ref: 'users',
+        },
+        visibility: {
+            type: String,
+            enum: ['public', 'private'],
+            default: 'public'
+        },
         attachments: [
 
         ],
