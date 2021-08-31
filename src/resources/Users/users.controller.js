@@ -23,7 +23,6 @@ module.exports = {
     try {
       // CHECK IF USER EXISTS
       let user = await User.findOne({ email: req.body.email }, "+password email role");
-      console.log(user)
       if (!user)
         return res.status(406).json({
           message: 'Invalid credentials',
@@ -90,7 +89,6 @@ module.exports = {
     ).exec();
   },
   signOut: async (req, res, errorCb) => {
-    console.log("sign out");
     await User.updateOne(
       { _id: req.body.userId },
       { token: "" },
@@ -109,7 +107,6 @@ module.exports = {
       });
   },
   getAll: async (req, res, errorCb) => {
-    console.log("get by all");
     let data = await User.find({});
     // const { filter } = req.query;
     // Get all users here

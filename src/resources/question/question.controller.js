@@ -7,7 +7,6 @@ module.exports = {
         // GET: Read Single Resources from here
     },
     getUserQuestions: async (req, res) => {
-        console.log(req.params)
         const { userID } = req.params
 
         await Question.find({ user: mongoose.Types.ObjectId(userID) })
@@ -45,7 +44,6 @@ module.exports = {
             const data = {
                 allQuestions, assistedBy, userQuestions
             }
-            console.log(data)
             return res.status(200).json({ allQuestions, assistedBy, userQuestions })
         } catch (error) {
             return res.status(500).json({ message: 'something went wrong' })
@@ -78,7 +76,6 @@ module.exports = {
             .populate('assistedBy', 'firstName lastName email')
             .populate('user', 'firstName lastName email')
             .then(doc => {
-                console.log(doc)
                 return res.status(200).json(doc)
             }).catch(error => {
                 console.log(error)

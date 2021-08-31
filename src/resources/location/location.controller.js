@@ -8,7 +8,6 @@ module.exports = {
         const { userID } = req.params
         await Location.findOne({ user: mongoose.Types.ObjectId(userID) })
             .then(doc => {
-                console.log(doc)
                 return res.status(200).json(doc)
             }).catch(error => {
                 console.log(error)
@@ -20,7 +19,6 @@ module.exports = {
         await Location.find()
             .populate('user', 'firstName lastName')
             .then(docs => {
-                console.log(docs)
                 return res.status(200).json(docs)
             }).catch(error => {
                 console.log(error)
@@ -41,7 +39,6 @@ module.exports = {
         const { lat, lng } = req.body
         await Location.findOneAndUpdate({ user: mongoose.Types.ObjectId(userID) }, { lat, lng }, { new: true, upsert: true })
             .then(updated => {
-                console.log(updated)
                 return res.status(200).json(updated)
             }).catch(error => {
                 console.log(error)

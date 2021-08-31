@@ -31,7 +31,6 @@ module.exports = {
 
         await Chat.find({ questionId, sentAt: { $gt: lastMessageSentAt }, sender: { $ne: mongoose.Types.ObjectId(currentUser) } })
             .then(data => {
-                console.log(data)
                 res.status(200).json(data)
             })
             .catch(error => {
@@ -50,12 +49,10 @@ module.exports = {
     },
     syncOffineMessages: async (req, res) => {
         // POST: Create Resources here
-        console.log(req.body)
         req.body.forEach(v => delete v._id);
 
         await Chat.insertMany(req.body)
             .then(response => {
-                console.log(response)
                 res.status(200).json(response)
             })
             .catch(error => {
