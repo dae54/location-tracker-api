@@ -35,6 +35,22 @@ module.exports = {
                 return res.status(500).json({ message: 'something went wrong' })
             })
     },
+    getQuestionsCount: async (req, res) => {
+        try {
+            const { userID } = req.params
+
+            const allQuestions = await Question.countDocuments()
+            const assistedBy = await Question.countDocuments({ assistedBy: mongoose.Types.ObjectId(userID) })
+            const userQuestions = await Question.countDocuments({ user: mongoose.Types.ObjectId(userID) })
+            const data = {
+                allQuestions, assistedBy, userQuestions
+            }
+            console.log(data)
+            return res.status(200).json({ allQuestions, assistedBy, userQuestions })
+        } catch (error) {
+            return res.status(500).json({ message: 'something went wrong' })
+        }
+    },
     getAll: async (req, res, next) => {
         // GET: Read ALL Resources from here
         await Question.find()
