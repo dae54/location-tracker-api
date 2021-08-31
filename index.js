@@ -26,6 +26,15 @@ connect()
     mongoose.set("useCreateIndex", true)
     const app = require("./app");
     const server = http.createServer(app);
+    // const io = require("socket.io").listen(server);
+
+    // io.on("connection", socket => {
+    //   console.log("a user connected :D");
+    //   socket.on("chat message", msg => {
+    //     console.log(msg);
+    //     io.emit("chat message", msg);
+    //   });
+    // });
 
     server.listen(ENV.PORT, () => {
 
